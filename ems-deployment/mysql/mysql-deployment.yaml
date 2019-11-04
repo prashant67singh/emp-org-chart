@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql-app
+spec:
+  selector:
+    matchLabels:
+      app: mysql-app
+      tier: backend
+  strategy:
+    type: Recreate    
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+        tier: backend
+    spec:
+      containers:
+       - image: mysql:8.0
+         name: mysql-app
+         args: 
+         - --lower_case_table_names=1
+         ports:
+          - containerPort: 3306
+         env:
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credential
+                key: username
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credential
+                key: password            
+          - name: MYSQL_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credential
+                key: database
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credential
+                key: rootPassword 
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-credential
+data:
+  rootPassword: MTIzNDU=
+  username: ZGVtbw==
+  password: MTIzNDU=
+  database: c2FraWxh

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    name: msql-app
+spec:
+  selector:
+    app: mysql-app
+    tier: backend
+  type : NodePort
+  ports:
+    - protocol: TCP
+      port: 3306
+      name: http

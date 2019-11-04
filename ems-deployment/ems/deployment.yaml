@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ems-deployment
+  labels:
+    app: ems-app
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: ems-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: ems-app
+        tier: backend
+    spec:
+      containers:
+      - image: prashant67singh/employee-management-system-complete
+        name: ems-app
+        ports:
+        - containerPort: 8080
+          name: service-port
+        env:
+          - name: spring.profiles.active
+            value: "dev"
+          - name: spring.datasource.url
+            value: "jdbc:mysql://mysql-service:3306/sakila"
+          - name: spring.datasource.username
+            valueFrom:
+              secretKeyRef:
+                name: mysql-login
+                key: username
+          - name: spring.datasource.password
+            valueFrom:
+              secretKeyRef:
+                name: mysql-login
+                key: password
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-login
+data:
+  rootPassword: MTIzNDU=
+  username: ZGVtbw==
+  password: MTIzNDU=          
+        

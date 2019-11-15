@@ -7,6 +7,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DesignationService {
 
+
+    private DesignationRepository designationRepository;
     @Autowired
-    DesignationRepository designationRepository;
+    public DesignationService(DesignationRepository designationRepository) {
+        this.designationRepository = designationRepository;
+    }
+
+
 }

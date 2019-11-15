@@ -107,7 +107,7 @@ public class EmployeeApplicationTests extends AbstractTransactionalTestNGSpringC
     public void testDeleteEmployeeByIdWithNoSubordinates() throws Exception{
         mockMvc.perform(delete(path+"/{id}",10))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
     // Test deleteEmployeeById(int id) along with its Response Status for Employee with multiple subordinates
@@ -134,7 +134,7 @@ public class EmployeeApplicationTests extends AbstractTransactionalTestNGSpringC
         }
         mockMvc.perform(delete(path+"/{id}",1))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
     //Test addEmployee() for correct Json Body
     @Test

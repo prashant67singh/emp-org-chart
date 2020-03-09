@@ -17,14 +17,15 @@ spec:
         tier: backend
     spec:
       containers:
-      - image: prashant67singh/employee-management-system-complete
+      - image: prashant67singh/employee-management-system-complete:1.1
+        imagePullPolicy: IfNotPresent
         name: ems-app
         ports:
         - containerPort: 8080
           name: service-port
         env:
           - name: spring.profiles.active
-            value: "dev"
+            value: "prod"
           - name: spring.datasource.url
             value: "jdbc:mysql://mysql-service:3306/sakila"
           - name: spring.datasource.username
